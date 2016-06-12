@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:elevation="8dp"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/include_popup_avatar"
+        layout="@layout/action_layout_icon_textview"/>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/text_hint"/>
+
+    <TextView
+        android:id="@+id/tv_popup_setting"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/selector_white_to_grey"
+        android:gravity="center"
+        android:onClick="onClick"
+        android:text="@string/action_setting"
+        android:textColor="@color/text_grey_deep_2"
+        android:textSize="17sp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/text_hint"/>
+
+    <TextView
+        android:id="@+id/tv_popup_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/selector_white_to_grey"
+        android:gravity="center"
+        android:onClick="onClick"
+        android:text="@string/action_cancel"
+        android:textColor="@color/text_grey_deep_2"
+        android:textSize="17sp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/text_hint"/>
+
+    <TextView
+        android:id="@+id/tv_popup_exit"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/selector_white_to_grey"
+        android:gravity="center"
+        android:onClick="onClick"
+        android:text="@string/action_exit"
+        android:textColor="@color/text_grey_deep_2"
+        android:textSize="17sp"/>
+
+
+</LinearLayout>

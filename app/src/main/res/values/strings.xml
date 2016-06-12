@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">安正飞鸟</string>
+    <string name="auto_loading">自动登录中</string>
+    <string name="input_nickname">请输用户名</string>
+    <string name="input_password">请输入密码</string>
+    <string name="forget_password">忘记密码</string>
+    <string name="login">登录</string>
+    <string name="action_setting">设置</string>
+    <string name="action_cancel">注销</string>
+    <string name="action_exit">退出</string>
+    <string name="text_meeting">会议</string>
+    <string name="text_message">信息</string>
+    <string name="text_police">报警</string>
+    <string name="text_avatar">头像</string>
+    <string name="text_name">姓名</string>
+    <string name="text_job">职务</string>
+    <string name="text_options">分类</string>
+    <string name="text_default_group">默认组</string>
+    <string name="text_state">状态</string>
+    <string name="text_divide_type">设备型号</string>
+    <string name="text_build_time">创建时间</string>
+
+    <string name="text_blue_tooth">蓝牙</string>
+    <string name="text_ptt_key">音量键作为PTT键</string>
+    <string name="text_connect_again">断开重连</string>
+    <string name="text_disconnect_time">空闲挂断时间</string>
+    <string name="text_start_reboot">是否开机启动</string>
+    <string name="text_version">当前版本</string>
+</resources>

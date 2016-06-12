@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="@drawable/selector_white_to_grey"
+    android:padding="22dp">
+
+    <ImageView
+        android:id="@+id/img_main_activity_action_avatar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="4dp"
+        android:src="@drawable/icon_single_avatar"/>
+
+    <TextView
+        android:id="@+id/tv_main_activity_action_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="6dp"
+        android:text="王大锤"
+        android:textColor="@color/text_grey_deep"
+        android:textSize="14sp"/>
+
+
+</LinearLayout>
