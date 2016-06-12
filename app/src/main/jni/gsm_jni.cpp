@@ -48,7 +48,7 @@ gsm0610_state_t *gsm0610_enc_state;
 gsm0610_state_t *gsm0610_dec_state;
 
 extern "C"
-JNIEXPORT jint JNICALL Java_org_sipdroid_codecs_GSM_open
+JNIEXPORT jint JNICALL Java_com_azfn_opentalk_network_rtp_Codecs_GSM_open
   (JNIEnv *env, jobject obj) {
 	int ret;
 
@@ -71,7 +71,7 @@ JNIEXPORT jint JNICALL Java_org_sipdroid_codecs_GSM_open
 }
 
 extern "C"
-JNIEXPORT jint JNICALL Java_org_sipdroid_codecs_GSM_encode
+JNIEXPORT jint JNICALL Java_com_azfn_opentalk_network_rtp_Codecs_GSM_encode
     (JNIEnv *env, jobject obj, jshortArray lin, jint offset, jbyteArray encoded, jint size) {
 
 	jshort pre_amp[BLOCK_LEN];	
@@ -117,7 +117,7 @@ JNIEXPORT jint JNICALL Java_org_sipdroid_codecs_GSM_encode
 }
 
 extern "C"
-JNIEXPORT jint JNICALL Java_org_sipdroid_codecs_GSM_decode
+JNIEXPORT jint JNICALL Java_com_azfn_opentalk_network_rtp_Codecs_GSM_decode
     (JNIEnv *env, jobject obj, jbyteArray encoded, jshortArray lin, jint size) {
 
 	jshort post_amp[BLOCK_LEN];
@@ -147,7 +147,7 @@ JNIEXPORT jint JNICALL Java_org_sipdroid_codecs_GSM_decode
 
 
 extern "C"
-JNIEXPORT void JNICALL Java_org_sipdroid_codecs_GSM_close
+JNIEXPORT void JNICALL Java_com_azfn_opentalk_network_rtp_Codecs_GSM_close
     (JNIEnv *env, jobject obj) {
 
 	if (--codec_open != 0)
