@@ -7,9 +7,10 @@ package com.azfn.opentalk.network;
  */
 
 public class ParamContants {
-    public static final String USER_ID = "_user_id";
-    public static final String TIMESTAMP = "_timestamp";
-    public static final String TOKEN  = "_token";
-    public static final String VERSION  = "_current_version";
+    public static final String USER_ID = "userid";
+    public static final String PASSWORD = "password";
+    public static final String TIMESTAMP = "timestamp";
+    public static final String TOKEN  = "token";
+    public static final String VERSION  = "currentversion";
 
 }

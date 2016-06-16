@@ -18,6 +18,7 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
+import rx.Observable;
 
 /**
  * User: xiaoming
@@ -32,12 +33,12 @@ public interface HttpInterface {
 
 
     @FormUrlEncoded
-    @POST("/")
-    Call<LoginUser> login(@Field(ParamContants.USER_ID) String name, @Field(ParamContants.TIMESTAMP) String occupation, @Field(ParamContants.TOKEN) String token);
+    @POST("app/login.do")
+    Observable<LoginUser> login(@Field(ParamContants.USER_ID) String name, @Field(ParamContants.PASSWORD) String psd, @Field(ParamContants.TIMESTAMP) String occupation, @Field(ParamContants.TOKEN) String token);
 
 
     @FormUrlEncoded
-    @POST("/app/softwareUpdateCheck.do")
+    @POST("softwareQuery.do")
     Call<Version> version(@Field(ParamContants.VERSION) String version, @Field(ParamContants.TIMESTAMP) String occupation, @Field(ParamContants.TOKEN) String token);
 
 

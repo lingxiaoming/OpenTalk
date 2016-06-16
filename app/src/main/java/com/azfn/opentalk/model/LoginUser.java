@@ -11,8 +11,15 @@ import com.azfn.opentalk.network.BaseResult;
 /**
  * Created by apple on 16/6/5.
  */
-public class LoginUser extends BaseResult{
-    public String _user_name;
-    public String _company_id;
-    public String _company_name;
+public class LoginUser extends BaseResult {
+
+    public User body;
+
+
+    public class User{
+        public String username;
+        public int companyid;
+        public String companyname;
+        public String defaultgid;
+    }
 }

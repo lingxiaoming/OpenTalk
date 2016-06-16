@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.azfn.opentalk.R;
 import com.azfn.opentalk.base.BaseActivity;
+import com.azfn.opentalk.model.LoginUser;
+import com.azfn.opentalk.network.HttpRequset;
 
 /**
  * User: xiaoming
@@ -18,7 +20,7 @@ import com.azfn.opentalk.base.BaseActivity;
  * Time: 13:36
  * 登录页面
  */
-public class LoginActivity extends BaseActivity implements View.OnClickListener {
+public class LoginActivity extends BaseActivity implements View.OnClickListener, HttpRequset.ILoadFinish {
     private EditText mEtNickname;
     private EditText mEtPassword;
     private TextView mTvFindPassword;
@@ -62,8 +64,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
                 break;
             case R.id.btn_login_activity_login:
-                //TODO do login
-                loginSuccess();
+//                HttpRequset.getInstance().login(mEtNickname.getText().toString(), mEtPassword.getText().toString());
+//                Observable.con
                 break;
         }
     }
@@ -72,5 +74,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private void loginSuccess(){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void success(Object object) {
+        LoginUser loginUser = (LoginUser) object;
+        if(loginUser != null) loginSuccess();
+    }
+
+    @Override
+    public void fail(String errorMsg) {
+
     }
 }

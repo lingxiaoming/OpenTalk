@@ -232,6 +232,7 @@ public class RtpStreamReceiver extends Thread {
 		} catch (SocketException e2) {
 			e2.printStackTrace();
 		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		try {
 			rtp_socket.getDatagramSocket().setSoTimeout(SO_TIMEOUT);

@@ -6,15 +6,12 @@ package com.azfn.opentalk.network;
  * http请求返回的数据结构类型
  */
 
-import retrofit2.http.Body;
-
 /**
  * Created by apple on 16/6/5.
  */
 public class BaseResult {
     public int status;//1成功，2失败
     public ErrorMsg error;//
-    public Body body;
 
 
 

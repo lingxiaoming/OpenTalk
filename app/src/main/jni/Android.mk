@@ -1,4 +1,5 @@
 LOCAL_PATH := $(call my-dir)
+LOCAL_LDLIBS := -L$(SYSROOT)/usr/lib -llog
 
 include $(CLEAR_VARS)
 SPANDSP     := spandsp
@@ -16,7 +17,6 @@ LOCAL_SRC_FILES := gsm_jni.cpp \
 	$(SPANDSP)/gsm0610_short_term.c \
 	$(SPANDSP)/gsm0610_long_term.c
 LOCAL_ARM_MODE := arm
-LOCAL_LDLIBS := -L$(SYSROOT)/usr/lib -llog
 LOCAL_CLINCLUDES += $(LOCAL_PATH)/$(SPANDSP)
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/$(SPANDSP)/spandsp
 LOCAL_CFLAGS = -O3

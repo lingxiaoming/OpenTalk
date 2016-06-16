@@ -37,6 +37,7 @@ import com.azfn.opentalk.network.rtp.Codecs.G711;
 import com.azfn.opentalk.network.rtp.OpenTalkSocket;
 import com.azfn.opentalk.network.rtp.RtpPacket;
 import com.azfn.opentalk.network.rtp.RtpSocket;
+import com.azfn.opentalk.tools.LogUtils;
 
 import java.net.InetAddress;
 import java.util.HashMap;
@@ -47,6 +48,7 @@ import java.util.Random;
  * it through RTP.
  */
 public class RtpStreamSender extends Thread {
+	private static final String TAG = "RtpStreamSender";
 	/** Whether working in debug mode. */
 	public static boolean DEBUG = true;
 
@@ -249,8 +251,7 @@ public class RtpStreamSender extends Thread {
 		WifiManager wm = (WifiManager) TalkApplication.getInstance().getSystemService(Context.WIFI_SERVICE);
 		long lastscan = 0,lastsent = 0;
 
-		if (rtp_socket == null)
-			return;
+		if (rtp_socket == null) return;
 		int seqn = 0;
 		long time = 0;
 		double p = 0;
@@ -308,6 +309,8 @@ public class RtpStreamSender extends Thread {
 				changed = false;
 				record = new AudioRecord(MediaRecorder.AudioSource.MIC, codecs.codec.samp_rate(), AudioFormat.CHANNEL_CONFIGURATION_MONO, AudioFormat.ENCODING_PCM_16BIT,
 							min);
+//				record = findAudioRecord();
+
 				if (record.getState() != AudioRecord.STATE_INITIALIZED) {
 //					Receiver.engine(Receiver.mContext).rejectcall();
 					record = null;
@@ -494,4 +497,30 @@ public class RtpStreamSender extends Thread {
 		dtmf = dtmf+c; // will be set to 0 after sending tones
 	}
 	//DTMF change
+
+	private static int[] mSampleRates = new int[] { 8000, 11025, 22050, 44100 };
+	public AudioRecord findAudioRecord() {
+		for (int rate : mSampleRates) {
+			for (short audioFormat : new short[] { AudioFormat.ENCODING_PCM_8BIT, AudioFormat.ENCODING_PCM_16BIT }) {
+				for (short channelConfig : new short[] { AudioFormat.CHANNEL_IN_MONO, AudioFormat.CHANNEL_IN_STEREO }) {
+					try {
+						LogUtils.d(TAG, "Attempting rate " + rate + "Hz, bits: " + audioFormat + ", channel: "
+								+ channelConfig);
+						int bufferSize = AudioRecord.getMinBufferSize(rate, channelConfig, audioFormat);
+
+						if (bufferSize != AudioRecord.ERROR_BAD_VALUE) {
+							// check if we can instantiate and have a success
+							AudioRecord recorder = new AudioRecord(MediaRecorder.AudioSource.DEFAULT, rate, channelConfig, audioFormat, bufferSize);
+
+							if (recorder.getState() == AudioRecord.STATE_INITIALIZED)
+								return recorder;
+						}
+					} catch (Exception e) {
+						LogUtils.e(TAG, rate + "Exception, keep trying.");
+					}
+				}
+			}
+		}
+		return null;
+	}
 }

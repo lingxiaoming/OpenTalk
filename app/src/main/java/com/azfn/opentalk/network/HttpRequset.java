@@ -6,19 +6,29 @@ package com.azfn.opentalk.network;
  * 描述一下这个类吧
  */
 
-import com.azfn.opentalk.model.LoginUser;
 import com.azfn.opentalk.model.Version;
+import com.azfn.opentalk.tools.MD5;
 
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by apple on 16/6/9.
  */
 public class HttpRequset {
+    private HttpInterface mInterface;
     private static HttpRequset mInstance;
+    private OkHttpClient okHttpClient;
+    private static String TAG = "HttpRequest";
+
 
     public static HttpRequset getInstance(){
         if(mInstance == null){
@@ -28,13 +38,28 @@ public class HttpRequset {
     }
 
 
-    private HttpInterface mInterface;
+
 
     private HttpRequset(){
+        initHttpClient();
+
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.github.com/")
+                .baseUrl("http://114.55.63.81/fnapp/")
+                .client(okHttpClient)
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
                 .build();
         mInterface = retrofit.create(HttpInterface.class);
+    }
+
+    private void initHttpClient() {
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        okHttpClient = new OkHttpClient.Builder()
+                .addInterceptor(interceptor)
+                .retryOnConnectionFailure(true)
+                .connectTimeout(15, TimeUnit.SECONDS)
+                .build();
     }
 
     public interface ILoadFinish {
@@ -42,31 +67,33 @@ public class HttpRequset {
         void fail(String errorMsg);
     }
 
-    public void login(String nickname, String password, final ILoadFinish iLoadFinish){
-        Call<LoginUser> loginUserCall = mInterface.login(nickname, password, "token");
-//        LoginUser loginUser = loginUserCall.execute();//同步
-        loginUserCall.enqueue(new Callback<LoginUser>() {//异步
-            @Override
-            public void onResponse(Call<LoginUser> call, Response<LoginUser> response) {
-                LoginUser loginUser = response.body();
-                iLoadFinish.success(loginUser);
-            }
+//    public Observable<LoginUser> login(String nickname, String password){
+//        return mInterface.login(nickname, password, System.currentTimeMillis()+"", "ijjjmmjddd")
+//                .compose(RxUtils.rxSchedulerHelper())
+//                .map(new Func1<LoginUser, User>() {
+//                    @Override
+//                    public User call(User user) {
+//                        return user;
+//                    }
+//                })
+//                .flatMap(new Func1<User>, Observable<User>) {
+//                    @Override
+//                    public Observable<User> call(User> users) {
+//                        return Observable.from(resultsBeen);
+//                    }
+//                })
+//    }
 
-            @Override
-            public void onFailure(Call<LoginUser> call, Throwable throwable) {
-                iLoadFinish.fail(throwable.getMessage());
-            }
-        });
-    }
-
-    public void checkVersion(String currentVersion, String password, final ILoadFinish iLoadFinish){
-        Call<Version> versionCall = mInterface.version(currentVersion, password, "token");
+    public void checkVersion(String currentVersion, final ILoadFinish iLoadFinish){
+//        LogUtils.e(TAG, "checkVersion"+currentVersion);
+        String timeSamp = System.currentTimeMillis()+"";
+        Call<Version> versionCall = mInterface.version(currentVersion, timeSamp, MD5.Md5(currentVersion+timeSamp+"ijjjmmjddd"));
 //        LoginUser loginUser = loginUserCall.execute();//同步
         versionCall.enqueue(new Callback<Version>() {//异步
             @Override
             public void onResponse(Call<Version> call, Response<Version> response) {
-                Version loginUser = response.body();
-                iLoadFinish.success(loginUser);
+                Version version = response.body();
+                iLoadFinish.success(version);
             }
 
             @Override

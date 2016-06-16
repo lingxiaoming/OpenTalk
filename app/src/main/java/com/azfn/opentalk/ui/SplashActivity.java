@@ -12,6 +12,7 @@ import com.azfn.opentalk.R;
 import com.azfn.opentalk.base.BaseActivity;
 import com.azfn.opentalk.model.Version;
 import com.azfn.opentalk.network.HttpRequset;
+import com.azfn.opentalk.tools.AppUtils;
 import com.azfn.opentalk.tools.WeakHandler;
 import com.azfn.opentalk.tools.loadImageView.ImageLoadHelper;
 
@@ -60,7 +61,7 @@ public class SplashActivity extends BaseActivity implements HttpRequset.ILoadFin
         weakHandler.sendEmptyMessage(MSG_ANIM_START_0);
         weakHandler.sendEmptyMessageDelayed(MSG_ANIM_ENDED, 1000);
 
-//        HttpRequset.getInstance().checkVersion(AppUtils.getAppVersionCode(this)+"", "", this);
+        HttpRequset.getInstance().checkVersion(AppUtils.getAppVersionCode(this)+"", this);
     }
 
     private WeakHandler weakHandler = new WeakHandler(new Handler.Callback() {
@@ -85,7 +86,7 @@ public class SplashActivity extends BaseActivity implements HttpRequset.ILoadFin
                     break;
                 case MSG_ANIM_ENDED:
                     weakHandler.removeCallbacksAndMessages(null);
-                    loadingFinish();
+//                    loadingFinish();
                     break;
             }
             return false;
@@ -101,6 +102,9 @@ public class SplashActivity extends BaseActivity implements HttpRequset.ILoadFin
     @Override
     public void success(Object object) {
         Version version = (Version) object;
+//        if(version != null){
+            loadingFinish();
+//        }
     }
 
     @Override

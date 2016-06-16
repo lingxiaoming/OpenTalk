@@ -32,6 +32,7 @@ class GSM extends CodecBase implements Codec {
 	void load() {
 		try {
 			System.loadLibrary("gsm_jni");
+			super.load();
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
@@ -42,11 +43,10 @@ class GSM extends CodecBase implements Codec {
 	public native int decode(byte encoded[], short lin[], int size);
 	public native int encode(short lin[], int offset, byte encoded[], int size);
 	public native void close();
-	
 	public void init() {
 		load();
 		if (isLoaded())
-			open();
+			System.out.println("GSM open:"+open());
 	}
 
 }

@@ -21,10 +21,12 @@
 
 package com.azfn.opentalk.network.rtp;
 
+import com.azfn.opentalk.tools.LogUtils;
+
 import java.net.InetAddress;
 import java.net.DatagramPacket;
 import java.io.IOException;
-
+import java.util.Arrays;
 
 
 /**
@@ -34,6 +36,7 @@ import java.io.IOException;
  * receive RtpPackets.
  */
 public class RtpSocket {
+	private static final String TAG = "RtpSocket";
 	/** UDP socket */
 	OpenTalkSocket socket;
 	DatagramPacket datagram;
@@ -82,6 +85,8 @@ public class RtpSocket {
 		datagram.setLength(rtpp.packet_len);
 		datagram.setAddress(r_addr);
 		datagram.setPort(r_port);
+		LogUtils.d(TAG, r_addr+":"+r_port);
+		System.out.println(TAG+"-"+r_addr+":"+r_port+" with "+ Arrays.toString(rtpp.packet));
 		socket.send(datagram);
 	}
 

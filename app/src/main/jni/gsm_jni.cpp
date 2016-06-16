@@ -25,7 +25,7 @@
 #include <memory.h>
 #include <ctype.h>
 #include <jni.h>
-#include <android/log.h> 
+#include <android/log.h>
 
 #include "spandsp/spandsp.h"
 
@@ -52,44 +52,64 @@ JNIEXPORT jint JNICALL Java_com_azfn_opentalk_network_rtp_Codecs_GSM_open
   (JNIEnv *env, jobject obj) {
 	int ret;
 
+	#ifdef DEBUG_GSM
+	__android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, "gsm_jni open 1");
+    #endif
+
 	if (codec_open++ != 0)
 		return (jint)0;
-		
+
+	#ifdef DEBUG_GSM
+	__android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, "gsm_jni open 2");
+    #endif
+
 	if ((gsm0610_enc_state = gsm0610_init(NULL, GSM0610_PACKING_VOIP)) == NULL)
 	{
 		fprintf(stderr, "    Cannot create encoder\n");
 		exit(2);
 	}
-		
+
+	#ifdef DEBUG_GSM
+	__android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, "gsm_jni open 3");
+	#endif
 	if ((gsm0610_dec_state = gsm0610_init(NULL, GSM0610_PACKING_VOIP)) == NULL)
 	{
 		fprintf(stderr, "    Cannot create decoder\n");
 		exit(2);
 	}
-	
+	#ifdef DEBUG_GSM
+	__android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, "gsm_jni open 4");
+	#endif
 	return (jint)0;
 }
 
 extern "C"
 JNIEXPORT jint JNICALL Java_com_azfn_opentalk_network_rtp_Codecs_GSM_encode
     (JNIEnv *env, jobject obj, jshortArray lin, jint offset, jbyteArray encoded, jint size) {
-
-	jshort pre_amp[BLOCK_LEN];	
+	#ifdef DEBUG_GSM
+	__android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, "gsm_jni encode 1");
+	#endif
+	jshort pre_amp[BLOCK_LEN];
 	jbyte gsm0610_data[BLOCK_LEN];
 		
 	int ret,i,frsz=BLOCK_LEN;
 
 	unsigned int lin_pos = 0;
-	
+	#ifdef DEBUG_GSM
+	__android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, "gsm_jni encode 2 :%d", codec_open);
+	#endif
 	if (!codec_open)
 		return 0;
-		
-#ifdef DEBUG_GSM
-    __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, 
+	#ifdef DEBUG_GSM
+	__android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, "gsm_jni encode 3");
+	#endif
+	#ifdef DEBUG_GSM
+    __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG,
             "encoding frame size: %d\toffset: %d\n", size, offset); 		
-#endif
-
-
+	#endif
+	#ifdef DEBUG_GSM
+	__android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, "gsm_jni encode 4");
+	#endif
 	for (i = 0; i < size; i+=BLOCK_LEN) {
 #ifdef DEBUG_GSM
 		__android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, 
@@ -111,8 +131,10 @@ JNIEXPORT jint JNICALL Java_com_azfn_opentalk_network_rtp_Codecs_GSM_encode
 #ifdef DEBUG_GSM
 	__android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, 
         "encoding **END** frame size: %d\toffset: %d i: %d lin_pos: %d\n", size, offset, i, lin_pos);
-#endif		
-
+#endif
+        #ifdef DEBUG_GSM
+	__android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, "gsm_jni encode 5");
+	#endif
     return (jint)lin_pos;
 }
 

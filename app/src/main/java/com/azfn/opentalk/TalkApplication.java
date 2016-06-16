@@ -8,6 +8,7 @@ package com.azfn.opentalk;
 
 import android.app.Application;
 
+import com.azfn.opentalk.network.rtp.CallState;
 import com.azfn.opentalk.network.rtp.Codecs.Codecs;
 import com.azfn.opentalk.network.rtp.media.JAudioLauncher;
 import com.azfn.opentalk.tools.LocationUtils;
@@ -25,11 +26,12 @@ public class TalkApplication extends Application {
         talkApplication = this;
 
         locationUtils = new LocationUtils(this);
-        locationUtils.startLocation();//开始定位
+//        locationUtils.startLocation();//开始定位
 
         jAudioLauncher = new JAudioLauncher(8181,
-                "192.168.0.105", 8081, 1, new Codecs(), 0);
-        jAudioLauncher.startMedia();
+                "192.168.0.101", 8181, -1, new Codecs(), 0);//-1接收,0全部,1发送
+        CallState.call_state = CallState.UA_STATE_OUTGOING_CALL;
+//        jAudioLauncher.startMedia();
     }
 
     public static TalkApplication getInstance(){
